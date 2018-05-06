@@ -81,11 +81,32 @@ footer {
 </head>
 <body>
   
-<a href="#id01">Native Modal</a> 
-<a href="#id02">External Modal</a>
-<p>Rev. 021</p>
+<a href="#native">Native Modal</a> 
+
+<label for="external">External Modal</label>
+<input type="checkbox" id="external">
   
-<div id="id01" class="modal">
+<p>Rev. 023</p>
+  
+<div id="external" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <header class="container"> 
+        <label for="external" class="closebtn">x</label>
+        <input type="checkbox" id="external">
+        <h2>External modal window</h2>
+      </header>
+      <div class="container">
+        <p>This one uses the checkbox hack.</p>
+      </div>
+      <footer class="container">
+        <p>Modal footer</p>
+      </footer>
+    </div>
+  </div>
+</div>
+  
+<div id="native" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <header class="container"> 
@@ -93,7 +114,7 @@ footer {
         <h2>Native modal window</h2>
       </header>
       <div class="container">
-        <p>This is activated by CSS selector.</p>
+        <p>This one uses the default anchor selector.</p>
       </div>
       <footer class="container">
         <p>Modal footer</p>

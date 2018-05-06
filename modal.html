@@ -5,7 +5,7 @@
 <style>
 
 /* The modal's background */
-.modal {
+.nat_modal {
   margin: auto;
   display: none;
   position: fixed;
@@ -21,19 +21,19 @@
 }
 
 /* Display the modal when targeted */
-.modal:target {
+.nat_modal:target {
   display: table;
   position: absolute;
 }
 
 /* The modal box */
-.modal-dialog {
+.nat_modal-dialog {
   display: table-cell;
   vertical-align: middle;
 }
 
 /* The modal's content */
-.modal-dialog .modal-content {
+.nat_modal-dialog .nat_modal-content {
   margin: auto;
   background-color: #f3f3f3;
   position: relative;
@@ -47,7 +47,7 @@
 }
 
 /* The button used to close the modal */
-.closebtn {
+.nat_closebtn {
   text-decoration: none;
   float: right;
   font-size: 35px;
@@ -55,24 +55,24 @@
   color: #fff;
 }
 
-.closebtn:hover,
-.closebtn:focus {
+.nat_closebtn:hover,
+.nat_closebtn:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
-.container {
+.nat_container {
   padding: 2px 16px;
 }
 
-header {
+nat_header {
   background-color: #5cb85c;
   font-size: 16px;
   color: white;
 }
 
-footer {
+nat_footer {
   background-color: #5cb85c;
   font-size: 8px;
   color: white;
@@ -86,7 +86,7 @@ footer {
 <label for="external">External Modal</label>
 <input type="checkbox" id="external">
   
-<p>Rev. 023</p>
+<p>Rev. 024</p>
   
 <div id="external" class="modal">
   <div class="modal-dialog">
@@ -106,17 +106,17 @@ footer {
   </div>
 </div>
   
-<div id="native" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <header class="container"> 
-        <a href="#" class="closebtn">×</a>
+<div id="native" class="nat_modal">
+  <div class="nat_modal-dialog">
+    <div class="nat_modal-content">
+      <header class="nat_container"> 
+        <a href="#" class="nat_closebtn">×</a>
         <h2>Native modal window</h2>
       </header>
-      <div class="container">
+      <div class="nat_container">
         <p>This one uses the default anchor selector.</p>
       </div>
-      <footer class="container">
+      <footer class="nat_container">
         <p>Modal footer</p>
       </footer>
     </div>

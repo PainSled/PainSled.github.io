@@ -1,3 +1,10 @@
+
+/* Hide */
+input[type=checkbox]#external {
+  opacity:0;
+  position:absolute;
+}
+
 /* The modal's background */
 .modal {
   margin: auto;
@@ -13,60 +20,8 @@
   z-index: 9001;
 }
 
-/* Display the modal when targeted */
-input[type=checkbox]:checked ~ .modal {
+/* Display the modal when checked */
+input[type=checkbox]#external:checked ~ .modal {
   display: table;
   position: absolute;
-}
-
-/* The modal box */
-.modal-dialog {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-/* The modal's content */
-.modal-dialog .modal-content {
-  margin: auto;
-  background-color: #f3f3f3;
-  position: relative;
-  padding: 0;
-  outline: 0;
-  border: 1px #777 solid;
-  text-align: justify;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-}
-
-/* The button used to close the modal */
-.closebtn {
-  text-decoration: none;
-  float: right;
-  font-size: 35px;
-  font-weight: bold;
-  color: #fff;
-}
-
-.closebtn:hover,
-.closebtn:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.container {
-  padding: 2px 16px;
-}
-
-header {
-  background-color: #5cb85c;
-  font-size: 16px;
-  color: white;
-}
-
-footer {
-  background-color: #5cb85c;
-  font-size: 8px;
-  color: white;
 }

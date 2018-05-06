@@ -5,13 +5,14 @@
   position: fixed;
   display: table;
   position: absolute;
-  left: 0px;
+  left: 50%;
   top: 60px;
-  width: 100%;
+  width: 50%;
   height: calc(~"100% - 60px");
   overflow: auto;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9001;
 }
 
 /* Display the modal when targeted */

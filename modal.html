@@ -25,13 +25,13 @@
 }
 
 /* The modal box */
-.nat_modal-dialog {
+.modal-dialog {
   display: table-cell;
   vertical-align: middle;
 }
 
 /* The modal's content */
-.nat_modal-dialog .nat_modal-content {
+.modal-dialog .modal-content {
   margin: auto;
   background-color: #f3f3f3;
   position: relative;
@@ -45,7 +45,7 @@
 }
 
 /* The button used to close the modal */
-.nat_closebtn {
+.closebtn {
   text-decoration: none;
   float: right;
   font-size: 35px;
@@ -53,24 +53,24 @@
   color: #fff;
 }
 
-.nat_closebtn:hover,
-.nat_closebtn:focus {
+.closebtn:hover,
+.closebtn:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
-.nat_container {
+.container {
   padding: 2px 16px;
 }
 
-nat_header {
+header {
   background-color: #5cb85c;
   font-size: 16px;
   color: white;
 }
 
-nat_footer {
+footer {
   background-color: #5cb85c;
   font-size: 8px;
   color: white;
@@ -84,7 +84,7 @@ nat_footer {
 <label for="external">External Modal</label>
 <input type="checkbox" id="external">
   
-<p>Rev. 027</p>
+<p>Rev. 028</p>
 
 <div id="external" class="modal">
   <div class="modal-dialog">
@@ -105,16 +105,16 @@ nat_footer {
 </div>
 
 <div id="native" class="nat_modal">
-  <div class="nat_modal-dialog">
-    <div class="nat_modal-content">
-      <header class="nat_container"> 
-        <a href="#" class="nat_closebtn">×</a>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <header class="container"> 
+        <a href="#" class="closebtn">×</a>
         <h2>Native modal window</h2>
       </header>
-      <div class="nat_container">
+      <div class="container">
         <p>This one uses the default anchor selector.</p>
       </div>
-      <footer class="nat_container">
+      <footer class="container">
         <p>Modal footer</p>
       </footer>
     </div>

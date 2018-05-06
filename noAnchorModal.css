@@ -3,8 +3,6 @@
   margin: auto;
   display: none;
   position: fixed;
-  display: table;
-  position: absolute;
   left: 50%;
   top: 60px;
   width: 50%;

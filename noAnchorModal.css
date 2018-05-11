@@ -1,6 +1,7 @@
 
 /* Hide */
 input[type=checkbox]#external {
+  visibility:hidden;
   opacity:0;
   position:absolute;
 }

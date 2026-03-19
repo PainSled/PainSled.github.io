@@ -30,7 +30,7 @@
     async function loadWasm() {
       const output = document.getElementById('output');
       try {
-        const resp = await fetch(`app.wasm?v=${WASM_VERSION}`, { cache: 'no-cache' });
+        const resp = await fetch(`wavecave.wasm?v=${WASM_VERSION}`, { cache: 'no-cache' });
         if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
 
         const bytes = await resp.arrayBuffer();

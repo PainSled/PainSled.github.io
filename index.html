@@ -1,22 +1,50 @@
-<html>
-	<body>
-		<h3><u>Python</u></h3>
-		<h4>UI:</h4>
-		<ol>
-			<li>
-				<details>
-					<summary><a href="https://docs.python.org/2/library/curses.html" target="_blank">curses</a></summary>
-					<p>
-						curses.baudrate()
-						Return the output speed of the terminal in bits per second. On software terminal emulators it will have a fixed high value. Included for historical reasons; in former times, it was used to write output loops for time delays and occasionally to change interfaces depending on the line speed.
-						
-						curses.beep()
-						Emit a short attention sound.
-						
-						curses.can_change_color()
-						Return True or False, depending on whether the programmer can change the colors displayed by the terminal.
-					</p>
-				</details>
-			</li>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WASM Demo</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    #output {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>WASM Demo</h1>
+  <pre id="output">Loading…</pre>
+
+  <script>
+    const WASM_VERSION = '1.0.0';
+
+    async function loadWasm() {
+      const output = document.getElementById('output');
+      try {
+        const resp = await fetch(`app.wasm?v=${WASM_VERSION}`, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
+
+        const bytes = await resp.arrayBuffer();
+        const { instance } = await WebAssembly.instantiate(bytes);
+
+        output.textContent = 'WASM loaded successfully.\nExported functions: '
+          + Object.keys(instance.exports).join(', ');
+      } catch (err) {
+        output.textContent = 'Error loading WASM:\n' + err.message
+          + '\n\nMake sure app.wasm exists in the repository root.';
+      }
+    }
+
+    loadWasm();
+  </script>
+</body>
 </html>

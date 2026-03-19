@@ -34,7 +34,7 @@
         if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
 
         const bytes = await resp.arrayBuffer();
-        const { instance } = await WebAssembly.instantiate(bytes);
+        const { instance } = await WebAssembly.instantiate(bytes, {});
 
         output.textContent = 'WASM loaded successfully.\nExported functions: '
           + Object.keys(instance.exports).join(', ');

@@ -24,27 +24,17 @@
   <h1>WASM Demo</h1>
   <pre id="output">Loading…</pre>
 
-  <script>
-    const WASM_VERSION = '1.0.0';
+  <script type="module">
+    import init, { wasm_start } from './wavecave.js';
 
-    async function loadWasm() {
-      const output = document.getElementById('output');
-      try {
-        const resp = await fetch(`wavecave.wasm?v=${WASM_VERSION}`, { cache: 'no-cache' });
-        if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
-
-        const bytes = await resp.arrayBuffer();
-        const { instance } = await WebAssembly.instantiate(bytes, {});
-
-        output.textContent = 'WASM loaded successfully.\nExported functions: '
-          + Object.keys(instance.exports).join(', ');
-      } catch (err) {
-        output.textContent = 'Error loading WASM:\n' + err.message
-          + '\n\nMake sure wavecave.wasm exists in the repository root.';
-      }
+    const output = document.getElementById('output');
+    try {
+      await init();
+      wasm_start();
+      output.textContent = 'WASM loaded successfully.';
+    } catch (err) {
+      output.textContent = 'Error loading WASM:\n' + err.message;
     }
-
-    loadWasm();
   </script>
 </body>
 </html>

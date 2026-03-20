@@ -3,38 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WASM Demo</title>
+  <title>wavecave</title>
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      max-width: 640px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    #output {
-      background: #f4f4f4;
-      padding: 1rem;
-      border-radius: 4px;
-      white-space: pre-wrap;
-      font-family: monospace;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 100vw; height: 100vh; overflow: hidden; background: #0d0d0d; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
-  <h1>WASM Demo</h1>
-  <pre id="output">Loading…</pre>
-
   <script type="module">
-    import init, { wasm_start } from './wavecave.js';
-
-    const output = document.getElementById('output');
-    try {
-      await init();
-      wasm_start();
-      output.textContent = 'WASM loaded successfully.';
-    } catch (err) {
-      output.textContent = 'Error loading WASM:\n' + err.message;
-    }
+    import init from './wavecave.js';
+    await init();
   </script>
 </body>
 </html>

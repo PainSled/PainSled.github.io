@@ -218,6 +218,18 @@ cat >> index.html <<'FOOTER'
       repoLi.appendChild(branchUl);
       tree.appendChild(repoLi);
     }
+
+    let lastModified = null;
+    async function checkForUpdates() {
+      try {
+        const res = await fetch(location.href, { method: 'HEAD', cache: 'no-cache' });
+        const mod = res.headers.get('last-modified');
+        if (lastModified && mod !== lastModified) location.reload();
+        lastModified = mod;
+      } catch {}
+    }
+    checkForUpdates();
+    setInterval(checkForUpdates, 30000);
   </script>
 </body>
 </html>

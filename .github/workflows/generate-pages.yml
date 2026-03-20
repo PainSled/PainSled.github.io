@@ -1,0 +1,32 @@
+name: Generate Pages
+
+on:
+  push:
+    paths:
+      - 'webapps/**/*.js'
+      - 'webapps/**/*.wasm'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate HTML pages
+        run: bash generate.sh
+
+      - name: Commit and push generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html 'webapps/*/*/index.html'
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Regenerate pages"
+            git push
+          fi

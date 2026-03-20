@@ -1,3 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Collect tree entries: apps[repo]="branch1 branch2 ..."
+declare -A apps
+
+for js_file in webapps/*/*/*.js; do
+  [ -f "$js_file" ] || continue
+  dir=$(dirname "$js_file")
+  js_name=$(basename "$js_file")
+  repo=$(echo "$dir" | cut -d/ -f2)
+  branch=$(echo "$dir" | cut -d/ -f3)
+
+  apps["$repo"]+="${apps[$repo]:+ }$branch"
+
+  # Generate per-app index.html
+  cat > "$dir/index.html" <<EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${repo}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 100vw; height: 100vh; overflow: hidden; background: #0d0d0d; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import init from './${js_name}';
+    await init();
+  </script>
+</body>
+</html>
+EOF
+
+  echo "Generated $dir/index.html (entry: $js_name)"
+done
+
+# Build JS object literal for the tree
+tree_entries=""
+for repo in $(echo "${!apps[@]}" | tr ' ' '\n' | sort); do
+  branches=""
+  for b in $(echo "${apps[$repo]}" | tr ' ' '\n' | sort); do
+    branches+="${branches:+, }'$b'"
+  done
+  tree_entries+="${tree_entries:+,
+      }$repo: [$branches]"
+done
+
+# Generate root index.html
+cat > index.html <<'HEADER'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,9 +155,15 @@
   <ul class="tree" id="tree"></ul>
 
   <script>
+HEADER
+
+cat >> index.html <<EOF
     const apps = {
-      wavecave: ['main']
+      ${tree_entries}
     };
+EOF
+
+cat >> index.html <<'FOOTER'
 
     const tree = document.getElementById('tree');
 
@@ -134,3 +194,6 @@
   </script>
 </body>
 </html>
+FOOTER
+
+echo "Generated index.html"

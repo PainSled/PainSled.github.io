@@ -2875,7 +2875,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('wavecave_bg.wasm?v=335f5c3', import.meta.url);
+        module_or_path = new URL('wavecave_bg.wasm?v=6537b9c', import.meta.url);
     }
     const imports = __wbg_get_imports();
 

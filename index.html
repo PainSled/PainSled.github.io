@@ -136,7 +136,7 @@
           const span = document.createElement('span');
           span.className = 'modified';
           const d = new Date(modified);
-          span.textContent = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+          span.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
           branchLi.appendChild(span);
         }
         branchUl.appendChild(branchLi);

@@ -15,11 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for app changes
+        id: check
+        run: |
+          if git diff HEAD~1 --name-only -- 'webapps/**/*.js' 'webapps/**/*.wasm' 2>/dev/null | grep -q .; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No app files changed, skipping generation"
+          fi
 
       - name: Generate HTML pages
+        if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: bash generate.sh
 
       - name: Commit and push generated pages
+        if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

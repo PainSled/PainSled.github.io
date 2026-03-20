@@ -2374,7 +2374,7 @@ function __wbg_get_imports() {
         },
         __wbindgen_cast_000000000000000c: function(arg0, arg1) {
             // Cast intrinsic for `Closure(Closure { dtor_idx: 2631, function: Function { arguments: [Externref], shim_idx: 2632, ret: Result(Unit), inner_ret: Some(Result(Unit)) }, mutable: true }) -> Externref`.
-            const ret = makeMutClosure(arg0, arg1, wasm.__wasm_bindgen_func_elem_9131, __wasm_bindgen_func_elem_9118);
+            const ret = makeMutClosure(arg0, arg1, wasm.__wasm_bindgen_func_elem_9132, __wasm_bindgen_func_elem_9119);
             return addHeapObject(ret);
         },
         __wbindgen_cast_000000000000000d: function(arg0) {
@@ -2481,10 +2481,10 @@ function __wasm_bindgen_func_elem_7486(arg0, arg1, arg2, arg3) {
     wasm.__wasm_bindgen_func_elem_7486(arg0, arg1, addHeapObject(arg2), addHeapObject(arg3));
 }
 
-function __wasm_bindgen_func_elem_9118(arg0, arg1, arg2) {
+function __wasm_bindgen_func_elem_9119(arg0, arg1, arg2) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.__wasm_bindgen_func_elem_9118(retptr, arg0, arg1, addHeapObject(arg2));
+        wasm.__wasm_bindgen_func_elem_9119(retptr, arg0, arg1, addHeapObject(arg2));
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         if (r1) {
@@ -2995,7 +2995,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('wavecave_bg.wasm?v=9d2dc6c', import.meta.url);
+        module_or_path = new URL('wavecave_bg.wasm?v=37c06d0', import.meta.url);
     }
     const imports = __wbg_get_imports();
 

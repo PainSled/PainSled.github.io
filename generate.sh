@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Collect tree entries: apps[repo]="branch1 branch2 ..."
+# Collect tree entries: apps[repo]="branch1|date1 branch2|date2 ..."
 declare -A apps
 
 for js_file in webapps/*/*/*.js; do
@@ -11,7 +11,14 @@ for js_file in webapps/*/*/*.js; do
   repo=$(echo "$dir" | cut -d/ -f2)
   branch=$(echo "$dir" | cut -d/ -f3)
 
-  apps["$repo"]+="${apps[$repo]:+ }$branch"
+  wasm_file=$(find "$dir" -name '*.wasm' -print -quit 2>/dev/null)
+  if [ -n "$wasm_file" ]; then
+    modified=$(git log -1 --format='%aI' -- "$wasm_file" 2>/dev/null || echo "")
+  else
+    modified=""
+  fi
+
+  apps["$repo"]+="${apps[$repo]:+ }${branch}|${modified}"
 
   # Generate per-app index.html
   cat > "$dir/index.html" <<EOF
@@ -43,8 +50,10 @@ done
 tree_entries=""
 for repo in $(echo "${!apps[@]}" | tr ' ' '\n' | sort); do
   branches=""
-  for b in $(echo "${apps[$repo]}" | tr ' ' '\n' | sort); do
-    branches+="${branches:+, }'$b'"
+  for entry in $(echo "${apps[$repo]}" | tr ' ' '\n' | sort); do
+    b="${entry%%|*}"
+    d="${entry#*|}"
+    branches+="${branches:+, }{name: '$b', modified: '$d'}"
   done
   tree_entries+="${tree_entries:+,
       }$repo: [$branches]"
@@ -148,6 +157,12 @@ cat > index.html <<'HEADER'
       color: #d0e8c0;
       text-decoration: underline;
     }
+
+    .modified {
+      color: #555;
+      margin-left: 12px;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -179,13 +194,20 @@ cat >> index.html <<'FOOTER'
       repoLi.appendChild(repoSpan);
 
       const branchUl = document.createElement('ul');
-      for (const branch of branches) {
+      for (const {name, modified} of branches) {
         const branchLi = document.createElement('li');
         branchLi.className = 'branch';
         const a = document.createElement('a');
-        a.href = `/webapps/${repo}/${branch}/`;
-        a.textContent = branch;
+        a.href = `/webapps/${repo}/${name}/`;
+        a.textContent = name;
         branchLi.appendChild(a);
+        if (modified) {
+          const span = document.createElement('span');
+          span.className = 'modified';
+          const d = new Date(modified);
+          span.textContent = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+          branchLi.appendChild(span);
+        }
         branchUl.appendChild(branchLi);
       }
       repoLi.appendChild(branchUl);

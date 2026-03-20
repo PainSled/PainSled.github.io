@@ -94,6 +94,12 @@
       color: #d0e8c0;
       text-decoration: underline;
     }
+
+    .modified {
+      color: #555;
+      margin-left: 12px;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -102,7 +108,7 @@
 
   <script>
     const apps = {
-      wavecave: ['dev', 'main']
+      wavecave: [{name: 'dev', modified: '2026-03-20T18:18:09+00:00'}, {name: 'main', modified: '2026-03-20T20:10:37+00:00'}]
     };
 
     const tree = document.getElementById('tree');
@@ -119,13 +125,20 @@
       repoLi.appendChild(repoSpan);
 
       const branchUl = document.createElement('ul');
-      for (const branch of branches) {
+      for (const {name, modified} of branches) {
         const branchLi = document.createElement('li');
         branchLi.className = 'branch';
         const a = document.createElement('a');
-        a.href = `/webapps/${repo}/${branch}/`;
-        a.textContent = branch;
+        a.href = `/webapps/${repo}/${name}/`;
+        a.textContent = name;
         branchLi.appendChild(a);
+        if (modified) {
+          const span = document.createElement('span');
+          span.className = 'modified';
+          const d = new Date(modified);
+          span.textContent = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+          branchLi.appendChild(span);
+        }
         branchUl.appendChild(branchLi);
       }
       repoLi.appendChild(branchUl);

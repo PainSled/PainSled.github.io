@@ -3,17 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>wavecave</title>
+  <title>WASM Apps</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { width: 100vw; height: 100vh; overflow: hidden; background: #0d0d0d; }
-    canvas { display: block; }
+    body {
+      background: #0d0d0d;
+      color: #c8c8c8;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 15px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #e0e0e0;
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 24px;
+    }
+
+    .tree {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .tree ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+
+    .tree li {
+      position: relative;
+      padding: 2px 0;
+    }
+
+    .tree li::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #333;
+    }
+
+    .tree li::after {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 11px;
+      width: 10px;
+      height: 1px;
+      background: #333;
+    }
+
+    .tree li:last-child::before {
+      height: 11px;
+    }
+
+    .tree > li::before,
+    .tree > li::after {
+      display: none;
+    }
+
+    .repo {
+      color: #6a9fb5;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .repo::before {
+      content: '\25BE ';
+      color: #555;
+    }
+
+    .repo.collapsed::before {
+      content: '\25B8 ';
+    }
+
+    .repo.collapsed + ul {
+      display: none;
+    }
+
+    .branch a {
+      color: #a3be8c;
+      text-decoration: none;
+    }
+
+    .branch a:hover {
+      color: #d0e8c0;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <script type="module">
-    import init from './wavecave.js';
-    await init();
+  <h1>webapps/</h1>
+  <ul class="tree" id="tree"></ul>
+
+  <script>
+    const apps = {
+      wavecave: ['main'],
+    };
+
+    const tree = document.getElementById('tree');
+
+    for (const [repo, branches] of Object.entries(apps)) {
+      const repoLi = document.createElement('li');
+
+      const repoSpan = document.createElement('span');
+      repoSpan.className = 'repo';
+      repoSpan.textContent = repo + '/';
+      repoSpan.addEventListener('click', () => {
+        repoSpan.classList.toggle('collapsed');
+      });
+      repoLi.appendChild(repoSpan);
+
+      const branchUl = document.createElement('ul');
+      for (const branch of branches) {
+        const branchLi = document.createElement('li');
+        branchLi.className = 'branch';
+        const a = document.createElement('a');
+        a.href = `/webapps/${repo}/${branch}/`;
+        a.textContent = branch;
+        branchLi.appendChild(a);
+        branchUl.appendChild(branchLi);
+      }
+      repoLi.appendChild(branchUl);
+      tree.appendChild(repoLi);
+    }
   </script>
 </body>
 </html>

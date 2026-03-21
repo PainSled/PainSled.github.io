@@ -110,6 +110,7 @@
       margin-left: 8px;
       letter-spacing: 1px;
       font-size: 13px;
+      font-weight: bold;
     }
 
     .freshness span {
@@ -123,7 +124,7 @@
 
   <script>
     const apps = {
-      wavecave: [{name: 'dev', modified: '2026-03-20T23:33:19Z'}, {name: 'main', modified: '2026-03-20T23:33:19Z'}]
+      wavecave: [{name: 'dev', modified: '2026-03-20T23:33:10+00:00'}, {name: 'main', modified: '2026-03-20T23:17:08+00:00'}]
     };
 
     const tree = document.getElementById('tree');
@@ -150,6 +151,11 @@
         if (modified) {
           const d = new Date(modified);
 
+          const ts = document.createElement('span');
+          ts.className = 'modified';
+          ts.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+          branchLi.appendChild(ts);
+
           const freshness = document.createElement('span');
           freshness.className = 'freshness';
           const thresholds = [7*24*60, 24*60, 60, 10]; // minutes
@@ -161,11 +167,6 @@
             freshness.appendChild(dot);
           }
           branchLi.appendChild(freshness);
-
-          const ts = document.createElement('span');
-          ts.className = 'modified';
-          ts.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
-          branchLi.appendChild(ts);
         }
         branchUl.appendChild(branchLi);
       }

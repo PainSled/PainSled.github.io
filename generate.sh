@@ -173,6 +173,7 @@ cat > index.html <<'HEADER'
       margin-left: 8px;
       letter-spacing: 1px;
       font-size: 13px;
+      font-weight: bold;
     }
 
     .freshness span {
@@ -219,6 +220,11 @@ cat >> index.html <<'FOOTER'
         if (modified) {
           const d = new Date(modified);
 
+          const ts = document.createElement('span');
+          ts.className = 'modified';
+          ts.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+          branchLi.appendChild(ts);
+
           const freshness = document.createElement('span');
           freshness.className = 'freshness';
           const thresholds = [7*24*60, 24*60, 60, 10]; // minutes
@@ -230,11 +236,6 @@ cat >> index.html <<'FOOTER'
             freshness.appendChild(dot);
           }
           branchLi.appendChild(freshness);
-
-          const ts = document.createElement('span');
-          ts.className = 'modified';
-          ts.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
-          branchLi.appendChild(ts);
         }
         branchUl.appendChild(branchLi);
       }

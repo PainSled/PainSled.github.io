@@ -168,6 +168,16 @@ cat > index.html <<'HEADER'
       color: #555;
       font-size: 13px;
     }
+
+    .freshness {
+      margin-left: 8px;
+      letter-spacing: 1px;
+      font-size: 13px;
+    }
+
+    .freshness span {
+      color: #a3be8c;
+    }
   </style>
 </head>
 <body>
@@ -207,11 +217,24 @@ cat >> index.html <<'FOOTER'
         a.textContent = name;
         branchLi.appendChild(a);
         if (modified) {
-          const span = document.createElement('span');
-          span.className = 'modified';
           const d = new Date(modified);
-          span.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
-          branchLi.appendChild(span);
+
+          const freshness = document.createElement('span');
+          freshness.className = 'freshness';
+          const thresholds = [7*24*60, 24*60, 60, 10]; // minutes
+          const ageMin = (Date.now() - d.getTime()) / 60000;
+          for (const t of thresholds) {
+            const dot = document.createElement('span');
+            dot.textContent = '!';
+            dot.style.opacity = Math.max(0, 1 - ageMin / t);
+            freshness.appendChild(dot);
+          }
+          branchLi.appendChild(freshness);
+
+          const ts = document.createElement('span');
+          ts.className = 'modified';
+          ts.textContent = d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+          branchLi.appendChild(ts);
         }
         branchUl.appendChild(branchLi);
       }

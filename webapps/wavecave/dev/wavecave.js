@@ -2393,8 +2393,8 @@ function __wbg_get_imports() {
             return addHeapObject(ret);
         },
         __wbindgen_cast_0000000000000002: function(arg0, arg1) {
-            // Cast intrinsic for `Closure(Closure { dtor_idx: 260, function: Function { arguments: [], shim_idx: 261, ret: Unit, inner_ret: Some(Unit) }, mutable: false }) -> Externref`.
-            const ret = makeClosure(arg0, arg1, wasm.__wasm_bindgen_func_elem_781, __wasm_bindgen_func_elem_839);
+            // Cast intrinsic for `Closure(Closure { dtor_idx: 258, function: Function { arguments: [], shim_idx: 259, ret: Unit, inner_ret: Some(Unit) }, mutable: false }) -> Externref`.
+            const ret = makeClosure(arg0, arg1, wasm.__wasm_bindgen_func_elem_781, __wasm_bindgen_func_elem_893);
             return addHeapObject(ret);
         },
         __wbindgen_cast_0000000000000003: function(arg0, arg1) {
@@ -2512,8 +2512,8 @@ function __wbg_get_imports() {
 }
 
 const lAudioContext = (typeof AudioContext !== 'undefined' ? AudioContext : (typeof webkitAudioContext !== 'undefined' ? webkitAudioContext : undefined));
-function __wasm_bindgen_func_elem_839(arg0, arg1) {
-    wasm.__wasm_bindgen_func_elem_839(arg0, arg1);
+function __wasm_bindgen_func_elem_893(arg0, arg1) {
+    wasm.__wasm_bindgen_func_elem_893(arg0, arg1);
 }
 
 function __wasm_bindgen_func_elem_7721(arg0, arg1) {
@@ -3074,7 +3074,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('wavecave_bg.wasm?v=bdcf52e', import.meta.url);
+        module_or_path = new URL('wavecave_bg.wasm?v=3ef5cef', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
